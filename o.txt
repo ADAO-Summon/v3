@@ -1,0 +1,119 @@
+    Finished dev [unoptimized + debuginfo] target(s) in 0.11s
+     Running `/Users/rileykilgore/git/IOG/aiken-repos/aiken/target/debug/aiken check`
+{
+  "seed": 1733288463,
+  "modules": [
+    {
+      "name": "proxy.test",
+      "tests": [
+        {
+          "name": "passing_test",
+          "status": "PASS",
+          "iterations": 100,
+          "labels": {},
+          "counterexample": null
+        },
+        {
+          "name": "failing_test",
+          "status": "PASS",
+          "iterations": 100,
+          "labels": {},
+          "counterexample": null
+        }
+      ],
+      "summary": {
+        "total": 2,
+        "passed": 2,
+        "failed": 0
+      }
+    },
+    {
+      "name": "proxy_demo",
+      "tests": [
+        {
+          "name": "passing_test",
+          "status": "PASS",
+          "iterations": 100,
+          "labels": {},
+          "counterexample": null
+        },
+        {
+          "name": "failing_test",
+          "status": "PASS",
+          "iterations": 100,
+          "labels": {},
+          "counterexample": null
+        }
+      ],
+      "summary": {
+        "total": 2,
+        "passed": 2,
+        "failed": 0
+      }
+    }
+  ],
+  "summary": {
+    "total_tests": 4,
+    "passed_tests": 4,
+    "failed_tests": 0,
+    "unit_tests": 0,
+    "property_tests": 4,
+    "module_count": 2,
+    "max_execution_units": {
+      "memory": 1,
+      "cpu": 1
+    },
+    "max_iterations": 3,
+    "modules": [
+      {
+        "name": "proxy.test",
+        "tests": [
+          {
+            "name": "passing_test",
+            "status": "PASS",
+            "iterations": 100,
+            "labels": {},
+            "counterexample": null
+          },
+          {
+            "name": "failing_test",
+            "status": "PASS",
+            "iterations": 100,
+            "labels": {},
+            "counterexample": null
+          }
+        ],
+        "summary": {
+          "total": 2,
+          "passed": 2,
+          "failed": 0
+        }
+      },
+      {
+        "name": "proxy_demo",
+        "tests": [
+          {
+            "name": "passing_test",
+            "status": "PASS",
+            "iterations": 100,
+            "labels": {},
+            "counterexample": null
+          },
+          {
+            "name": "failing_test",
+            "status": "PASS",
+            "iterations": 100,
+            "labels": {},
+            "counterexample": null
+          }
+        ],
+        "summary": {
+          "total": 2,
+          "passed": 2,
+          "failed": 0
+        }
+      }
+    ]
+  }
+}
+

@@ -1,23 +1,15 @@
 use aiken/collection/list
 use aiken/collection/pairs
-use cardano/address.{Credential}
 use cardano/assets.{PolicyId}
 use cardano/script_context.{ScriptContext}
-use cardano/transaction.{Datum, InlineDatum, OutputReference, Transaction} as tx
-
-fn get_inline_data(datum: Datum) -> Data {
-  when datum is {
-    InlineDatum(d) -> d
-    _ -> fail
-  }
-}
+use cardano/transaction.{Input, OutputReference, Transaction} as tx
+use common/utils.{ProxyDatum}
 
 validator one_shot(mint_ref: OutputReference) {
-  mint(_r: Data, policy_id: PolicyId, tx: Transaction) {
-    let Transaction { inputs, mint, .. } = tx
+  mint(_r: Data, _p: PolicyId, tx: Transaction) {
+    let Transaction { inputs, .. } = tx
     // Ensure mint_ref is spent.
-    expect Some(_) = list.find(inputs, fn(i) { i.output_reference == mint_ref })
-    mint == assets.from_asset(policy_id, "control", 1)
+    list.find(inputs, fn(i) { i.output_reference == mint_ref }) != None
   }
 
   else(_) {
@@ -29,7 +21,6 @@ validator proxy(nft_policy: PolicyId) {
   else(ctx: ScriptContext) {
     let Transaction { reference_inputs, inputs, withdrawals, .. } =
       ctx.transaction
-    // Find the reference input with the control-NFT.
     let maybe_ref =
       list.find(
         reference_inputs,
@@ -49,7 +40,8 @@ validator proxy(nft_policy: PolicyId) {
           input
         }
       }
-    expect svh: Credential = get_inline_data(control_input.output.datum)
-    pairs.has_key(withdrawals, svh)
+    expect proxy_datum: ProxyDatum =
+      utils.get_inline_data(control_input.output.datum)
+    pairs.has_key(withdrawals, proxy_datum.credential)
   }
 }

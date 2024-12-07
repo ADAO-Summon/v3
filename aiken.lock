@@ -8,7 +8,7 @@ source = "github"
 
 [[requirements]]
 name = "aiken-lang/fuzz"
-version = "873e4cb3665d9140108258b2df5a68f520ee4708"
+version = "f2670924f23904553bc8e80ba6788ef8d19eb844"
 source = "github"
 
 [[packages]]
@@ -19,7 +19,7 @@ source = "github"
 
 [[packages]]
 name = "aiken-lang/fuzz"
-version = "873e4cb3665d9140108258b2df5a68f520ee4708"
+version = "f2670924f23904553bc8e80ba6788ef8d19eb844"
 requirements = []
 source = "github"
 

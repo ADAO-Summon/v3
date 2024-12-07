@@ -6,7 +6,7 @@ use aiken/fuzz
 use aiken/interval
 use cardano/address.{Credential, VerificationKey}
 use cardano/assets.{Lovelace, PolicyId}
-use cardano/gen_transaction
+use cardano/fuzz/transaction as gen_transaction
 use cardano/transaction.{Datum, InlineDatum, Input, Transaction}
 
 pub type ProxyDatum {

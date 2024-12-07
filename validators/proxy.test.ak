@@ -2,13 +2,13 @@ use aiken/builtin
 use aiken/fuzz.{and_then, bool, bytearray, constant, map, such_that}
 use cardano/address.{Credential}
 use cardano/assets.{PolicyId}
-use cardano/gen_address.{any_credential}
-use cardano/gen_assets.{any_policy_id}
-use cardano/gen_script_context.{constrained_script_context}
-use cardano/gen_transaction.{
+use cardano/fuzz/address.{any_credential} as gen_address
+use cardano/fuzz/assets.{any_policy_id} as gen_assets
+use cardano/fuzz/script_context.{constrained_script_context} as gen_script_context
+use cardano/fuzz/transaction.{
   add_fuzz_input, add_fuzz_output, add_fuzz_ref_input, add_fuzz_withdrawals,
   any_constrained_input, any_constrained_output,
-}
+} as gen_transaction
 use cardano/script_context.{Minting, ScriptContext}
 use cardano/transaction.{Datum, InlineDatum, Transaction}
 use common/utils.{ProxyDatum, any_generic_tx}
@@ -99,4 +99,13 @@ test passing_test(ctx via gen_passing_ctx()) {
 test failing_test(ctx via gen_failing_ctx()) fail {
   let (p, c) = ctx
   proxy.proxy.else(p, c)
+}
+
+fn gen_scaled_constant() -> ScaledFuzzer<Int> {
+  let x: ScaledFuzzer<Int> = fuzz.scaled_constant(100)
+  x
+}
+
+test scaled_test(ctx via gen_scaled_constant()) {
+  True
 }

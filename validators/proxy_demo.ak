@@ -4,15 +4,18 @@ use aiken/collection/pairs
 use aiken/fuzz.{and_then, bool, bytearray, constant, map, such_that}
 use cardano/address.{Credential}
 use cardano/assets.{PolicyId}
-use cardano/gen_address.{any_credential}
-use cardano/gen_assets.{any_policy_id}
-use cardano/gen_script_context.{constrained_script_context}
-use cardano/gen_transaction.{
+use cardano/fuzz/address.{any_credential} as gen_address
+use cardano/fuzz/assets.{any_policy_id} as gen_assets
+use cardano/fuzz/script_context.{constrained_script_context} as gen_script_context
+use cardano/fuzz/transaction.{
   add_fuzz_input, add_fuzz_output, add_fuzz_ref_input, add_fuzz_withdrawals,
   any_constrained_input, any_constrained_output, any_generic_tx,
-}
+} as gen_transaction
 use cardano/script_context.{Minting, ScriptContext}
 use cardano/transaction.{Datum, InlineDatum, Input, Transaction} as tx
+
+type ScaledFuzzer<a> =
+  fn(PRNG, Int) -> Option<(PRNG, a)>
 
 type ProxyDatum {
   credential: Credential,
@@ -129,35 +132,4 @@ fn gen_failing_ctx() -> Fuzzer<(PolicyId, ScriptContext)> {
     ),
     fn(c) { (policy, c) },
   )
-}
-
-test passing_test(ctx via gen_passing_ctx()) {
-  let (p, c) = ctx
-  proxy.else(p, c)
-}
-
-test failing_test(ctx via gen_failing_ctx()) fail {
-  let (p, c) = ctx
-  proxy.else(p, c)
-}
-
-type TargetState {
-  nonce: ByteArray,
-  miner: ByteArray,
-  block_number: Int,
-  current_hash: ByteArray,
-  leading_zeros: Int,
-  target_number: Int,
-  epoch_time: Int,
-}
-
-fn p(t: TargetState) {
-  let proxy_inputs =
-    when
-      filter_inputs_by_credential(ctx.transaction.inputs, proxy_credential)
-    is {
-      [] -> fail @"Insufficient Proxy Inputs"
-      x -> x
-    }
-  proxy_inputs
 }
